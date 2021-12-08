@@ -3,6 +3,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import Button from '@mui/material/Button';
 import './App.css';
 
 class Main extends React.Component {
@@ -41,6 +42,14 @@ class Main extends React.Component {
   };
 
   render() {
+
+    let locationsSelected = this.state.originSelected && this.state.destinationSelected;
+    let SubmitButton;
+    if (locationsSelected) {
+      SubmitButton = <Button variant="contained">Submit</Button>
+    } else {
+      SubmitButton = <Button variant="contained" disabled>Submit</Button>
+    };
 
     const searchOptions = {
       componentRestrictions: {country: ['us']},
@@ -128,6 +137,8 @@ class Main extends React.Component {
             </div>
           )}
         </PlacesAutocomplete>
+
+        {SubmitButton}
       </div>
     );
   }
