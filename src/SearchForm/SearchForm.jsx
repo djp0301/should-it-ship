@@ -4,9 +4,9 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Button from '@mui/material/Button';
-import './App.css';
+import '../App.css';
 
-class Main extends React.Component {
+class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,12 +49,23 @@ class Main extends React.Component {
       .catch(error => console.error('Error', error));
   };
 
+  handleSubmit = () => {
+    this.props.submitCities(
+      {
+        cityName: this.state.originCity, latLng: this.state.originLatLng
+      },
+      {
+        cityName: this.state.destinationCity, latLng: this.state.destinationLatLng
+      }
+    );
+  }
+
   render() {
 
     let locationsSelected = this.state.originSelected && this.state.destinationSelected;
     let SubmitButton;
     if (locationsSelected) {
-      SubmitButton = <Button variant="contained">Submit</Button>
+      SubmitButton = <Button variant="contained" onClick={this.handleSubmit}>Submit</Button>
     } else {
       SubmitButton = <Button variant="contained" disabled>Submit</Button>
     };
@@ -152,4 +163,4 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default SearchForm;
