@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchForm from './SearchForm/SearchForm.jsx';
 import Results from './Results/Results.jsx';
-import Card from '@mui/material/Card';
 import './App.css';
 
 class App extends React.Component {
@@ -36,7 +35,7 @@ class App extends React.Component {
     }
 
     return (
-      <div>
+      <div id='content'>
         {ComponentToRender}
       </div>
     );

@@ -4,7 +4,9 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Button from '@mui/material/Button';
-import '../App.css';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import AirplaneTicketTwoToneIcon from '@mui/icons-material/AirplaneTicketTwoTone';
+import './SearchForm.css';
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -77,6 +79,9 @@ class SearchForm extends React.Component {
 
     return (
       <div>
+        {/* <LocalShippingIcon sx={{height: '3em', width: 'auto', color: 'rgba(0,0,0,0.60)'}}/> */}
+        <AirplaneTicketTwoToneIcon sx={{height: '3em', width: 'auto', color: 'rgba(0,0,0,0.60)'}}/>
+        <h1 id='search-form-header'>Should It Ship?</h1>
         <PlacesAutocomplete
           value={this.state.originCity}
           onChange={this.handleOriginChange}
@@ -84,10 +89,10 @@ class SearchForm extends React.Component {
           searchOptions={searchOptions}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div>
+            <div className='search-box-container'>
               <input
                 {...getInputProps({
-                  placeholder: 'Search Places ...',
+                  placeholder: 'Origin City...',
                   className: 'location-search-input',
                 })}
               />
@@ -100,7 +105,7 @@ class SearchForm extends React.Component {
                   // inline style for demonstration purpose
                   const style = suggestion.active
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    : { backgroundColor: 'rgba(0,0,0,0.4)', cursor: 'pointer' };
                   return (
                     <div
                       {...getSuggestionItemProps(suggestion, {
@@ -124,10 +129,10 @@ class SearchForm extends React.Component {
           searchOptions={searchOptions}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div>
+            <div className='search-box-container'>
               <input
                 {...getInputProps({
-                  placeholder: 'Search Places ...',
+                  placeholder: 'Destination City...',
                   className: 'location-search-input',
                 })}
               />
@@ -140,7 +145,7 @@ class SearchForm extends React.Component {
                   // inline style for demonstration purpose
                   const style = suggestion.active
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    : { backgroundColor: 'rgba(0,0,0,0.4)', cursor: 'pointer' };
                   return (
                     <div
                       {...getSuggestionItemProps(suggestion, {
