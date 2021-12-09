@@ -1,0 +1,47 @@
+.cityCard {
+  width: 25vw;
+  height: 25vw;
+  max-height: 250px;
+  max-width: 250px;
+  margin: 1em;
+  border: 1px solid black;
+  border-radius: 0px 0px 40px 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  grid-template-rows: repeat(3, 33%);
+}
+
+.cityCardName {
+  grid-row: 3;
+  grid-column-start: span 3;
+  /* padding: auto; */
+  text-align: center;
+  font-size: 1.25em;
+  font-weight: bold
+}
+
+.loadingBar {
+  grid-row: 2;
+  grid-column-start: span 3;
+  width: 75%;
+  margin: auto;
+}
+
+.approvalIcon {
+  color: green;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
+.rejectionIcon {
+  color: red;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
+.cityCard p {
+  grid-column: 1/4;
+  text-align: center;
+}

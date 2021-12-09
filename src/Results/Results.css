@@ -1,0 +1,10 @@
+.results {
+  width: 75vw;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(5, auto);
+}
+
+.results h1 {
+  grid-column: 1/3;
+}

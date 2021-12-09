@@ -2,7 +2,10 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import axios from 'axios';
+import './CityCard.css';
 
 
 class CityCard extends React.Component {
@@ -42,19 +45,24 @@ class CityCard extends React.Component {
 
     let LoadingIndicator;
     if (!this.state.loaded) {
-      LoadingIndicator = <div style={{width: '75%'}}><LinearProgress /></div>
+      LoadingIndicator = <CircularProgress className='loadingBar' />
     }
 
     let WeatherAlert;
+    let MoreInfoLink;
     if (this.state.loaded && this.state.severeWeather) {
-      WeatherAlert = <div style={{color: 'red'}}>Sever Weather Detected!!</div>
+      WeatherAlert = <FlagCircleIcon sx={{height: '100%', width: 'auto'}} className='rejectionIcon' />;
+      MoreInfoLink = <p>(Click card for more information)</p>;
+    } else if (this.state.loaded && !this.state.severeWeather) {
+      WeatherAlert = <CheckCircleIcon sx={{height: '100%', width: 'auto'}} className='approvalIcon' />
     }
 
     return (
-      <Card>
-        <h3>{this.props.city.cityName.slice(0,-5)}</h3>
+      <Card className='cityCard' style={{borderRadius: '1.25em'}}>
+        {MoreInfoLink}
         {LoadingIndicator}
         {WeatherAlert}
+        <p className='cityCardName'>{this.props.city.cityName.slice(0,-5)}</p>
       </Card>
     )
   }

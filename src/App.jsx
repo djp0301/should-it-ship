@@ -36,9 +36,9 @@ class App extends React.Component {
     }
 
     return (
-      <Card>
+      <div>
         {ComponentToRender}
-      </Card>
+      </div>
     );
   }
 }

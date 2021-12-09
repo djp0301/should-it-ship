@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Card from '@mui/material/Card';
 import CityCard from '../CityCard/CityCard.jsx';
+import './Results.css';
 
 class Results extends React.Component {
   render() {
@@ -10,7 +11,7 @@ class Results extends React.Component {
     let originCity = this.props.origin.cityName.slice(0,-5);
     let destinationCity = this.props.destination.cityName.slice(0,-5);
     return (
-      <div>
+      <div className='results'>
         <h1>{originCity} to {destinationCity}</h1>
         <CityCard city={this.props.origin} type={'origin'} />
         <CityCard city={this.props.destination} type={'destination'} />
