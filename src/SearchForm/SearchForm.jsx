@@ -65,9 +65,9 @@ class SearchForm extends React.Component {
     let locationsSelected = this.state.originSelected && this.state.destinationSelected;
     let SubmitButton;
     if (locationsSelected) {
-      SubmitButton = <Button variant="contained" onClick={this.handleSubmit}>Submit</Button>
+      SubmitButton = <Button style={{marginTop: '2em'}} variant="contained" onClick={this.handleSubmit}>Submit</Button>
     } else {
-      SubmitButton = <Button variant="contained" disabled>Submit</Button>
+      SubmitButton = <Button style={{marginTop: '2em'}} variant="contained" disabled>Submit</Button>
     };
 
     const searchOptions = {
