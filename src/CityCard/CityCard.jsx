@@ -24,13 +24,18 @@ class CityCard extends React.Component {
     .then((response) => {
       // handle success
       console.log(response);
-      let hasAlerts;
+      // let hasAlerts;
+      // if (response.data.alerts) {
+      //   hasAlerts = true;
+      // } else {
+      //   hasAlerts = false;
+      // }
+      // this.setState({loaded: true, severeWeather: hasAlerts})
       if (response.data.alerts) {
-        hasAlerts = true;
+        this.props.setLocation({hasAlert: true, alerts: response.data.alerts})
       } else {
-        hasAlerts = false;
+        this.props.setLocation({hasAlert: false})
       }
-      this.setState({loaded: true, severeWeather: hasAlerts})
     })
     .catch((error) => {
       // handle error
@@ -44,16 +49,16 @@ class CityCard extends React.Component {
   render() {
 
     let LoadingIndicator;
-    if (!this.state.loaded) {
+    if (!this.props.loaded) {
       LoadingIndicator = <CircularProgress className='loadingBar' />
     }
 
     let WeatherAlert;
     let MoreInfoLink;
-    if (this.state.loaded && this.state.severeWeather) {
+    if (this.props.loaded && this.props.details.hasAlert) {
       WeatherAlert = <FlagCircleIcon sx={{height: '100%', width: 'auto'}} className='rejectionIcon' />;
       MoreInfoLink = <p>(Click card for more information)</p>;
-    } else if (this.state.loaded && !this.state.severeWeather) {
+    } else if (this.props.loaded && !this.props.details.hasAlert) {
       WeatherAlert = <CheckCircleIcon sx={{height: '100%', width: 'auto'}} className='approvalIcon' />
     }
 
