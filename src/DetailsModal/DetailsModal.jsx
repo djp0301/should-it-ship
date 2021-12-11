@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import './DetailsModal.css';
 
 class DetailsModal extends React.Component {
   // constructor(props) {
