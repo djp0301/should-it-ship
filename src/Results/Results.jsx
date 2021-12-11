@@ -6,6 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousTwoToneIcon from '@mui/icons-material/DangerousTwoTone';
 import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import CityCard from '../CityCard/CityCard.jsx';
+import DetailsModal from '../DetailsModal/DetailsModal.jsx';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
@@ -33,7 +34,7 @@ class Results extends React.Component {
       louisvilleHasAlert: false,
       louisvilleAlerts: null,
       displayDetailsModal: false,
-      modalAlerts: null
+      modalDetails: null
     }
 
     this.setOrigin = this.setOrigin.bind(this);
@@ -76,8 +77,8 @@ class Results extends React.Component {
     }
   }
 
-  displayModal(alerts) {
-    this.setState({displayModal: true, modalAlerts: alerts})
+  displayModal(alerts, cityName) {
+    this.setState({displayModal: true, modalDetails: {alerts, cityName}})
   }
 
   closeModal() {
@@ -114,35 +115,42 @@ class Results extends React.Component {
       }
     }
 
-    return (
-      <div className='results'>
-        <h1 className='results-header'>{originCity} to {destinationCity}</h1>
-        {OverallResult}
-        {CarrierExplanation}
+    if (this.state.displayModal) {
+      return (
+        <DetailsModal details={this.state.modalDetails} closeModal={this.closeModal} />
+      )
+    } else {
+      return (
+        <div className='results'>
+          <h1 className='results-header'>{originCity} to {destinationCity}</h1>
+          {OverallResult}
+          {CarrierExplanation}
 
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Result</TableCell>
-                <TableCell align="center">Location</TableCell>
-                <TableCell align="center">Details</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <CityCard city={this.props.origin} type={'origin'} setLocation={this.setOrigin} loaded={this.state.originLoaded} hasAlert={this.state.originHasAlert} alerts={this.state.originAlerts} displayModal={this.displayModal}/>
-              <CityCard city={this.props.destination} type={'destination'} setLocation={this.setDestination} loaded={this.state.destinationLoaded} hasAlert={this.state.destinationHasAlert} alerts={this.state.destinationAlerts} displayModal={this.displayModal} />
-              <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 35.117500, lng: -89.971107}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} alerts={this.state.memphisAlerts} displayModal={this.displayModal} carrier='FedEx' />
-              <CityCard city={{cityName: 'Louisville, KY, USA', latLng: {lat: 38.328732, lng: -85.764771}}} setLocation={this.setLouisville} loaded={this.state.louisvilleLoaded} hasAlert={this.state.louisvilleHasAlert} alerts={this.state.louisvilleAlerts} displayModal={this.displayModal} carrier='UPS' />
-            </TableBody>
-          </Table>
-        </TableContainer>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Result</TableCell>
+                  <TableCell align="center">Location</TableCell>
+                  <TableCell align="center">Details</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <CityCard city={this.props.origin} type={'origin'} setLocation={this.setOrigin} loaded={this.state.originLoaded} hasAlert={this.state.originHasAlert} alerts={this.state.originAlerts} displayModal={this.displayModal}/>
+                <CityCard city={this.props.destination} type={'destination'} setLocation={this.setDestination} loaded={this.state.destinationLoaded} hasAlert={this.state.destinationHasAlert} alerts={this.state.destinationAlerts} displayModal={this.displayModal} />
+                <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 35.117500, lng: -89.971107}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} alerts={this.state.memphisAlerts} displayModal={this.displayModal} carrier='FedEx' />
+                <CityCard city={{cityName: 'Louisville, KY, USA', latLng: {lat: 38.328732, lng: -85.764771}}} setLocation={this.setLouisville} loaded={this.state.louisvilleLoaded} hasAlert={this.state.louisvilleHasAlert} alerts={this.state.louisvilleAlerts} displayModal={this.displayModal} carrier='UPS' />
+              </TableBody>
+            </Table>
+          </TableContainer>
 
 
-        <Button id='return-home-button' style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="contained" startIcon={<KeyboardReturnIcon />} onClick={this.props.handleBackToSearchClick}>Return to Search</Button>
-      </div>
-    )
+          <Button id='return-home-button' style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="contained" startIcon={<KeyboardReturnIcon />} onClick={this.props.handleBackToSearchClick}>Return to Search</Button>
+        </div>
+      )
+    }
   }
+
 }
 
 export default Results;

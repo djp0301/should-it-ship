@@ -37,7 +37,7 @@ class CityCard extends React.Component {
   }
 
   clickDetailHandler() {
-    this.props.displayModal(this.props.alerts)
+    this.props.displayModal(this.props.alerts, this.props.city.cityName)
   }
 
   render() {

@@ -1,43 +1,40 @@
 import React from 'react';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import './DetailsModal.css';
 
 class DetailsModal extends React.Component {
-  constructor(props) {
+  // constructor(props) {
+  //   super(props);
+  // }
 
-  }
   render() {
 
-    const style = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 400,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
-    };
+    let allMessages = this.props.details.alerts.map((alert) => {
+      return(
+        <div>
+          <hr></hr>
+          <h2>{alert.event}</h2>
+          <div>
+            <strong>Active Until: </strong><span>{new Date(alert.end * 1000).toLocaleString()}</span>
+          </div>
+          <div>
+            <p>{alert.description}</p>
+          </div>
+        </div>
+      )
+    })
 
-    return (
-      <div>
-        <Modal
-          // open={open}
-          onClose={this.props.closeModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {JSON.stringify(this.props.alerts)}
-            </Typography>
-          </Box>
-        </Modal>
+    return(
+      <div className='results' style={{maxHeight: '80vh'}}>
+        <div className='alert-details'>
+          <h1>{this.props.details.cityName.slice(0,-5)}</h1>
+          <em>Current Severe Weather Alerts</em>
+          <div className='alert-details' style={{overflow: 'auto', maxHeight: '55vh'}}>
+            {allMessages}
+          </div>
+          <Button id='return-to-results-button' style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="contained" startIcon={<KeyboardReturnIcon />} onClick={this.props.closeModal}>Return to Results</Button>
+        </div>
       </div>
     )
   }
