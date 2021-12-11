@@ -95,7 +95,7 @@ class Results extends React.Component {
     } else {
       if (!this.state.originHasAlert && !this.state.destinationHasAlert) {
         if (!this.state.memphisHasAlert && !this.state.louisvilleHasAlert) {
-          OverallResult = <CheckCircleIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='approvalIcon' />;
+          OverallResult = <CheckCircleIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='approvalIcon overallIcon' />;
         } else if (this.state.memphisHasAlert && this.state.louisvilleHasAlert) {
           OverallResult = <DangerousTwoToneIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='rejectionIcon overallIcon' />
         } else {
