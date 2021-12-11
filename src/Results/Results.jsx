@@ -3,7 +3,8 @@ import Button from '@mui/material/Button';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import CircularProgress from '@mui/material/CircularProgress';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DangerousIcon from '@mui/icons-material/Dangerous';
+import DangerousTwoToneIcon from '@mui/icons-material/DangerousTwoTone';
+import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
 import CityCard from '../CityCard/CityCard.jsx';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -67,7 +68,6 @@ class Results extends React.Component {
     }
   }
 
-
   render() {
     let originCity = this.props.origin.cityName.slice(0,-5);
     let destinationCity = this.props.destination.cityName.slice(0,-5);
@@ -76,17 +76,33 @@ class Results extends React.Component {
     if (!this.state.originLoaded || !this.state.destinationLoaded || !this.state.memphisLoaded || !this.state.louisvilleLoaded) {
       OverallResult = <CircularProgress className='loadingBar' />
     } else {
-      if (!this.state.routeHasAlert) {
-        OverallResult = <CheckCircleIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='approvalIcon' />
+      if (!this.state.originHasAlert && !this.state.destinationHasAlert) {
+        if (!this.state.memphisHasAlert && !this.state.louisvilleHasAlert) {
+          OverallResult = <CheckCircleIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='approvalIcon' />;
+        } else if (this.state.memphisHasAlert && this.state.louisvilleHasAlert) {
+          OverallResult = <DangerousTwoToneIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='rejectionIcon overallIcon' />
+        } else {
+          OverallResult = <WarningTwoToneIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='warningIcon overallIcon' />
+        }
       } else {
-        OverallResult = <DangerousIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='rejectionIcon' />
+        OverallResult = <DangerousTwoToneIcon sx={{height: '3em', width: 'auto', marginBottom: '1em'}} className='rejectionIcon overallIcon' />
+      }
+    }
+
+    let CarrierExplanation;
+    if (!this.state.originHasAlert && !this.state.destinationHasAlert) {
+      if (this.state.memphisHasAlert && !this.state.louisvilleHasAlert) {
+        CarrierExplanation = <em>Only ship via UPS</em>
+      } else if (!this.state.memphisHasAlert && this.state.louisvilleHasAlert) {
+        CarrierExplanation = <em>Only ship via FedEx</em>
       }
     }
 
     return (
       <div className='results'>
-        <h1>{originCity} to {destinationCity}</h1>
+        <h1 className='results-header'>{originCity} to {destinationCity}</h1>
         {OverallResult}
+        {CarrierExplanation}
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -101,13 +117,14 @@ class Results extends React.Component {
               <CityCard city={this.props.origin} type={'origin'} setLocation={this.setOrigin} loaded={this.state.originLoaded} hasAlert={this.state.originHasAlert} />
               <CityCard city={this.props.destination} type={'destination'} setLocation={this.setDestination} loaded={this.state.destinationLoaded} hasAlert={this.state.destinationHasAlert} />
               <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 35.117500, lng: -89.971107}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} carrier='FedEx' />
+              {/* <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 32.22174, lng: -110.92648}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} carrier='FedEx' /> */}
               <CityCard city={{cityName: 'Louisville, KY, USA', latLng: {lat: 38.328732, lng: -85.764771}}} setLocation={this.setLouisville} loaded={this.state.louisvilleLoaded} hasAlert={this.state.louisvilleHasAlert} carrier='UPS' />
             </TableBody>
           </Table>
         </TableContainer>
 
 
-        <Button style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="contained" startIcon={<KeyboardReturnIcon />} onClick={this.props.handleBackToSearchClick}>Return to Search</Button>
+        <Button id='return-home-button' style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="contained" startIcon={<KeyboardReturnIcon />} onClick={this.props.handleBackToSearchClick}>Return to Search</Button>
       </div>
     )
   }

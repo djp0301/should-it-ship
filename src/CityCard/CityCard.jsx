@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DangerousIcon from '@mui/icons-material/Dangerous';
+import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
+import DangerousTwoToneIcon from '@mui/icons-material/DangerousTwoTone';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import axios from 'axios';
@@ -19,7 +19,6 @@ class CityCard extends React.Component {
   }
 
   componentDidMount() {
-    console.dir(process.env.REACT_APP_OPEN_WEATHER_API_KEY);
     axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.props.city.latLng.lat}&lon=${this.props.city.latLng.lng}&exclude=current,minutely,hourly,daily&appid=${process.env.REACT_APP_OPEN_WEATHER_API_KEY}`)
     .then((response) => {
       // handle success
@@ -58,10 +57,10 @@ class CityCard extends React.Component {
     let WeatherAlert;
     let MoreInfoLink;
     if (this.props.loaded && this.props.hasAlert) {
-      WeatherAlert = <DangerousIcon sx={{maxHeight: '1em', width: '33%'}} className='rejectionIcon' />;
+      WeatherAlert = <DangerousTwoToneIcon sx={{maxHeight: '1em', width: '33%'}} className='rejectionIcon' />;
       MoreInfoLink = <p>Details</p>;
     } else if (this.props.loaded && !this.props.hasAlert) {
-      WeatherAlert = <CheckCircleIcon sx={{maxHeight: '1em', width: '33%'}} className='approvalIcon' />
+      WeatherAlert = <CheckCircleTwoToneIcon sx={{maxHeight: '1em', width: '33%'}} className='approvalIcon' />
     }
 
     let CarrierName;
