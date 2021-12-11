@@ -82,7 +82,7 @@ class Results extends React.Component {
   }
 
   closeModal() {
-    this.setState({displayModal: false, modalAlerts: null})
+    this.setState({displayModal: false, modalDetails: null})
   }
 
   render() {
