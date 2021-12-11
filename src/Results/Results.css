@@ -1,10 +1,63 @@
 .results {
-  width: 75vw;
+  /* width: 75vw; */
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(5, auto);
 }
 
+.loadingBar {
+  grid-row: 2;
+  grid-column-start: span 3;
+  width: 75%;
+  margin: auto;
+}
+
+.approvalIcon {
+  color: green;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
+.rejectionIcon {
+  color: red;
+  /* color: #E67300; */
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
+.warningIcon {
+  /* color: red; */
+  color: #E67300;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
 .results h1 {
-  grid-column: 1/3;
+  grid-column: 1/4;
+  color: rgba(0,0,0,0.60);
+  font-weight: 600;
+  margin: 0 0 1em 0;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: underline
+}
+
+.results em {
+  grid-column: 1/4;
+  margin-top: -0.75em;
+  margin-bottom: 1em;
+}
+
+.overallIcon {
+  grid-column: 1/4;
+}
+
+.MuiPaper-root {
+  grid-column: 1/4;
+}
+
+#return-home-button {
+  grid-column: 1/4;
 }

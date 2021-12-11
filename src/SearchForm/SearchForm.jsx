@@ -4,7 +4,6 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Button from '@mui/material/Button';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import AirplaneTicketTwoToneIcon from '@mui/icons-material/AirplaneTicketTwoTone';
 import './SearchForm.css';
 
