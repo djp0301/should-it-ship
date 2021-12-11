@@ -11,11 +11,7 @@ import './CityCard.css';
 class CityCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loaded: false,
-      severeWeather: false
-    }
-
+    this.clickDetailHandler = this.clickDetailHandler.bind(this);
   }
 
   componentDidMount() {
@@ -23,13 +19,6 @@ class CityCard extends React.Component {
     .then((response) => {
       // handle success
       console.log(response);
-      // let hasAlerts;
-      // if (response.data.alerts) {
-      //   hasAlerts = true;
-      // } else {
-      //   hasAlerts = false;
-      // }
-      // this.setState({loaded: true, severeWeather: hasAlerts})
       if (response.data.alerts) {
         this.props.setLocation({hasAlert: true, alerts: response.data.alerts})
       } else {
@@ -47,6 +36,10 @@ class CityCard extends React.Component {
     });
   }
 
+  clickDetailHandler() {
+    this.props.displayModal(this.props.alerts)
+  }
+
   render() {
 
     let LoadingIndicator;
@@ -55,10 +48,8 @@ class CityCard extends React.Component {
     }
 
     let WeatherAlert;
-    let MoreInfoLink;
     if (this.props.loaded && this.props.hasAlert) {
       WeatherAlert = <DangerousTwoToneIcon sx={{maxHeight: '1em', width: '33%'}} className='rejectionIcon' />;
-      MoreInfoLink = <p>Details</p>;
     } else if (this.props.loaded && !this.props.hasAlert) {
       WeatherAlert = <CheckCircleTwoToneIcon sx={{maxHeight: '1em', width: '33%'}} className='approvalIcon' />
     }
@@ -68,18 +59,17 @@ class CityCard extends React.Component {
       CarrierName = ` (${this.props.carrier} Hub)`
     }
 
+    let DetailLink;
+    if (this.props.hasAlert) {
+      DetailLink = <p style={{cursor: 'pointer', color: 'rgb(25,118,210)'}} onClick={this.clickDetailHandler}>Click Here</p>
+    }
+
     return (
       <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
         <TableCell align="center">{LoadingIndicator}{WeatherAlert}</TableCell>
         <TableCell align="center">{this.props.city.cityName.slice(0,-5)}{CarrierName}</TableCell>
-        <TableCell align="center">Placeholder</TableCell>
+        <TableCell align="center">{DetailLink}</TableCell>
       </TableRow>
-      // <Card className='cityCard' style={{borderRadius: '1.25em'}}>
-      //   {MoreInfoLink}
-      //   {LoadingIndicator}
-      //   {WeatherAlert}
-      //   <p className='cityCardName'>{this.props.city.cityName.slice(0,-5)}</p>
-      // </Card>
     )
   }
 }

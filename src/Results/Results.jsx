@@ -22,23 +22,31 @@ class Results extends React.Component {
       routeHasAlert: false,
       originLoaded: false,
       originHasAlert: false,
+      originAlerts: null,
       destinationLoaded: false,
       destinationHasAlert: false,
+      destinationAlerts: null,
       memphisLoaded: false,
       memphisHasAlert: false,
+      memphisAlerts: null,
       louisvilleLoaded: false,
-      louisvilleHasAlert: false
+      louisvilleHasAlert: false,
+      louisvilleAlerts: null,
+      displayDetailsModal: false,
+      modalAlerts: null
     }
 
     this.setOrigin = this.setOrigin.bind(this);
     this.setDestination = this.setDestination.bind(this);
     this.setMemphis = this.setMemphis.bind(this);
     this.setLouisville = this.setLouisville.bind(this);
+    this.displayModal = this.displayModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   setOrigin = (details) => {
     if (details.hasAlert) {
-      this.setState({originLoaded: true, originHasAlert: true, routeHasAlert: true})
+      this.setState({originLoaded: true, originHasAlert: true, routeHasAlert: true, originAlerts: details.alerts})
     } else {
       this.setState({originLoaded: true})
     }
@@ -46,7 +54,7 @@ class Results extends React.Component {
 
   setDestination = (details) => {
     if (details.hasAlert) {
-      this.setState({destinationLoaded: true, destinationHasAlert: true, routeHasAlert: true})
+      this.setState({destinationLoaded: true, destinationHasAlert: true, routeHasAlert: true, destinationAlerts: details.alerts})
     } else {
       this.setState({destinationLoaded: true})
     }
@@ -54,7 +62,7 @@ class Results extends React.Component {
 
   setMemphis = (details) => {
     if (details.hasAlert) {
-      this.setState({memphisLoaded: true, memphisHasAlert: true, routeHasAlert: true})
+      this.setState({memphisLoaded: true, memphisHasAlert: true, routeHasAlert: true, memphisAlerts: details.alerts})
     } else {
       this.setState({memphisLoaded: true})
     }
@@ -62,10 +70,18 @@ class Results extends React.Component {
 
   setLouisville = (details) => {
     if (details.hasAlert) {
-      this.setState({louisvilleLoaded: true, louisvilleHasAlert: true, routeHasAlert: true})
+      this.setState({louisvilleLoaded: true, louisvilleHasAlert: true, routeHasAlert: true, louisvilleAlerts: details.alerts})
     } else {
       this.setState({louisvilleLoaded: true})
     }
+  }
+
+  displayModal(alerts) {
+    this.setState({displayModal: true, modalAlerts: alerts})
+  }
+
+  closeModal() {
+    this.setState({displayModal: false, modalAlerts: null})
   }
 
   render() {
@@ -110,15 +126,14 @@ class Results extends React.Component {
               <TableRow>
                 <TableCell align="center">Result</TableCell>
                 <TableCell align="center">Location</TableCell>
-                <TableCell align="center">More Information</TableCell>
+                <TableCell align="center">Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <CityCard city={this.props.origin} type={'origin'} setLocation={this.setOrigin} loaded={this.state.originLoaded} hasAlert={this.state.originHasAlert} />
-              <CityCard city={this.props.destination} type={'destination'} setLocation={this.setDestination} loaded={this.state.destinationLoaded} hasAlert={this.state.destinationHasAlert} />
-              <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 35.117500, lng: -89.971107}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} carrier='FedEx' />
-              {/* <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 32.22174, lng: -110.92648}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} carrier='FedEx' /> */}
-              <CityCard city={{cityName: 'Louisville, KY, USA', latLng: {lat: 38.328732, lng: -85.764771}}} setLocation={this.setLouisville} loaded={this.state.louisvilleLoaded} hasAlert={this.state.louisvilleHasAlert} carrier='UPS' />
+              <CityCard city={this.props.origin} type={'origin'} setLocation={this.setOrigin} loaded={this.state.originLoaded} hasAlert={this.state.originHasAlert} alerts={this.state.originAlerts} displayModal={this.displayModal}/>
+              <CityCard city={this.props.destination} type={'destination'} setLocation={this.setDestination} loaded={this.state.destinationLoaded} hasAlert={this.state.destinationHasAlert} alerts={this.state.destinationAlerts} displayModal={this.displayModal} />
+              <CityCard city={{cityName: 'Memphis, TN, USA', latLng: {lat: 35.117500, lng: -89.971107}}} setLocation={this.setMemphis} loaded={this.state.memphisLoaded} hasAlert={this.state.memphisHasAlert} alerts={this.state.memphisAlerts} displayModal={this.displayModal} carrier='FedEx' />
+              <CityCard city={{cityName: 'Louisville, KY, USA', latLng: {lat: 38.328732, lng: -85.764771}}} setLocation={this.setLouisville} loaded={this.state.louisvilleLoaded} hasAlert={this.state.louisvilleHasAlert} alerts={this.state.louisvilleAlerts} displayModal={this.displayModal} carrier='UPS' />
             </TableBody>
           </Table>
         </TableContainer>
