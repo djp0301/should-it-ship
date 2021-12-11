@@ -1,8 +1,29 @@
-.results {
+/* .results {
   width: 75vw;
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(5, auto);
+} */
+
+.loadingBar {
+  grid-row: 2;
+  grid-column-start: span 3;
+  width: 75%;
+  margin: auto;
+}
+
+.approvalIcon {
+  color: green;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
+}
+
+.rejectionIcon {
+  color: red;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  margin: auto;
 }
 
 .results h1 {

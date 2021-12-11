@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '@mui/material/Card';
 import CircularProgress from '@mui/material/CircularProgress';
-import LinearProgress from '@mui/material/LinearProgress';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import DangerousIcon from '@mui/icons-material/Dangerous';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import axios from 'axios';
 import './CityCard.css';
 
@@ -40,6 +40,8 @@ class CityCard extends React.Component {
     .catch((error) => {
       // handle error
       console.log(error);
+      //DELETE THE FOLLOWING LINES
+      this.props.setLocation({hasAlert: Math.random() < 0.5, alerts: 'API Error - Genererated Fake Data for Testing'})
     })
     .then(() => {
       // always executed
@@ -55,20 +57,30 @@ class CityCard extends React.Component {
 
     let WeatherAlert;
     let MoreInfoLink;
-    if (this.props.loaded && this.props.details.hasAlert) {
-      WeatherAlert = <FlagCircleIcon sx={{height: '100%', width: 'auto'}} className='rejectionIcon' />;
-      MoreInfoLink = <p>(Click card for more information)</p>;
-    } else if (this.props.loaded && !this.props.details.hasAlert) {
-      WeatherAlert = <CheckCircleIcon sx={{height: '100%', width: 'auto'}} className='approvalIcon' />
+    if (this.props.loaded && this.props.hasAlert) {
+      WeatherAlert = <DangerousIcon sx={{maxHeight: '1em', width: '33%'}} className='rejectionIcon' />;
+      MoreInfoLink = <p>Details</p>;
+    } else if (this.props.loaded && !this.props.hasAlert) {
+      WeatherAlert = <CheckCircleIcon sx={{maxHeight: '1em', width: '33%'}} className='approvalIcon' />
+    }
+
+    let CarrierName;
+    if (this.props.carrier) {
+      CarrierName = ` (${this.props.carrier} Hub)`
     }
 
     return (
-      <Card className='cityCard' style={{borderRadius: '1.25em'}}>
-        {MoreInfoLink}
-        {LoadingIndicator}
-        {WeatherAlert}
-        <p className='cityCardName'>{this.props.city.cityName.slice(0,-5)}</p>
-      </Card>
+      <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+        <TableCell align="center">{LoadingIndicator}{WeatherAlert}</TableCell>
+        <TableCell align="center">{this.props.city.cityName.slice(0,-5)}{CarrierName}</TableCell>
+        <TableCell align="center">Placeholder</TableCell>
+      </TableRow>
+      // <Card className='cityCard' style={{borderRadius: '1.25em'}}>
+      //   {MoreInfoLink}
+      //   {LoadingIndicator}
+      //   {WeatherAlert}
+      //   <p className='cityCardName'>{this.props.city.cityName.slice(0,-5)}</p>
+      // </Card>
     )
   }
 }
