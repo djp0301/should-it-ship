@@ -4,7 +4,11 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Button from '@mui/material/Button';
+import InfoIcon from '@mui/icons-material/Info';
 import AirplaneTicketTwoToneIcon from '@mui/icons-material/AirplaneTicketTwoTone';
+import AboutAppModal from '../AboutAppModal/AboutAppModal.jsx';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles'
 import './SearchForm.css';
 
 class SearchForm extends React.Component {
@@ -16,7 +20,8 @@ class SearchForm extends React.Component {
       originLatLng: '',
       destinationLatLng: '',
       originSelected: false,
-      destinationSelected: false
+      destinationSelected: false,
+      showAboutAppModal: false
     };
   }
 
@@ -61,14 +66,35 @@ class SearchForm extends React.Component {
     );
   }
 
+  handleModalOpen = () => {
+    this.setState({showAboutAppModal: true})
+  }
+
+  handleModalClose = () => {
+    this.setState({showAboutAppModal: false})
+  }
+
   render() {
+
+    const theme = createTheme({
+      palette: {
+        primary: {
+          // Purple and green play nicely together.
+          main: '#90caf9',
+        },
+        secondary: {
+          // This is green.A700 as hex.
+          main: alpha('#292b2c', 0.6),
+        },
+      },
+    });
 
     let locationsSelected = this.state.originSelected && this.state.destinationSelected;
     let SubmitButton;
     if (locationsSelected) {
-      SubmitButton = <Button style={{marginTop: '2em'}} variant="contained" onClick={this.handleSubmit}>Submit</Button>
+      SubmitButton = <Button style={{marginTop: '2em', display: 'block', margin: 'auto'}} variant="contained" onClick={this.handleSubmit}>Submit</Button>
     } else {
-      SubmitButton = <Button style={{marginTop: '2em'}} variant="contained" disabled>Submit</Button>
+      SubmitButton = <Button style={{marginTop: '2em', display: 'block', margin: 'auto'}} variant="contained" disabled>Submit</Button>
     };
 
     const searchOptions = {
@@ -162,6 +188,12 @@ class SearchForm extends React.Component {
         </PlacesAutocomplete>
 
         {SubmitButton}
+
+        <ThemeProvider theme={theme}>
+          <Button id='about-app-button' style={{marginTop: '2em', marginLeft: 'auto', marginRight: 'auto'}} variant="outlined" color="secondary" startIcon={<InfoIcon />} onClick={this.handleModalOpen}>About This App</Button>
+        </ThemeProvider>
+
+        <AboutAppModal open={this.state.showAboutAppModal} onClose={this.handleModalClose}></AboutAppModal>
       </div>
     );
   }

@@ -39,3 +39,11 @@
   backdrop-filter: blur(3px);
   color: white;
 }
+
+#about-link:hover {
+ cursor: pointer
+}
+
+#about-app-button {
+  font-size: 0.5em
+}

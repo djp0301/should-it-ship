@@ -1,0 +1,13 @@
+.right-align {
+  display: flex;
+  justify-content: flex-end
+}
+
+.button:hover {
+  cursor: pointer;
+  fill: #536878
+}
+
+.button:active {
+  fill: white;
+}
